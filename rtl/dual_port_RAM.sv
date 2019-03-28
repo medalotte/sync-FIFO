@@ -58,7 +58,6 @@ module dual_port_RAM
       if(wr_en_r0) begin
          ram[addr_r0] <= din_r0;
       end
-
    end
 
    always_ff @(posedge clk) begin
