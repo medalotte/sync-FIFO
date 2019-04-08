@@ -3,7 +3,7 @@ Description of synchronous FIFO that consist of Dual Port RAM for FPGA implement
 
 ## Feature
 - Interface are designed by VALID-READY handshake
-- You can read data with no delay because of data prefetch logic when handshake is established
+- When handshake is established, you can read data with no delay because of logic that prefetch data
 - Latency is 3 cycle
 - Don't use distributed RAM, but BRAM
 
