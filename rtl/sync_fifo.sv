@@ -34,7 +34,11 @@ module sync_fifo
      */
     DATA_WIDTH    = 8,
     FIFO_DEPTH    = 256,
-    LB_FIFO_DEPTH = $clog2(FIFO_DEPTH))
+
+    localparam
+    PREFETCH_FIFO_DEPTH    = 4,
+    LB_FIFO_DEPTH          = $clog2(FIFO_DEPTH),
+    LB_PREFETCH_FIFO_DEPTH = $clog2(PREFETCH_FIFO_DEPTH))
    (input logic [DATA_WIDTH-1:0]   in_data,
     input logic                    in_valid,
     output logic                   in_ready,
@@ -49,9 +53,6 @@ module sync_fifo
     input logic                    clk,
     input logic                    rstn);
 
-   localparam PREFETCH_FIFO_DEPTH    = 4;
-   localparam LB_PREFETCH_FIFO_DEPTH = $clog2(PREFETCH_FIFO_DEPTH);
-
    logic [LB_FIFO_DEPTH-1:0]       waddr_r, raddr_r;
    logic [LB_FIFO_DEPTH:0]         fifo_count_r, mem_count_r;
    logic [DATA_WIDTH-1:0]          mem_din0, mem_din1;
@@ -60,8 +61,8 @@ module sync_fifo
 
    logic                           in_exec, out_exec;
 
-   logic                            prefetch_fifo_in_valid;
-   logic                            prefetch_fifo_in_ready;
+   logic                           prefetch_fifo_in_valid;
+   logic                           prefetch_fifo_in_ready;
    logic [LB_PREFETCH_FIFO_DEPTH:0] prefetch_fifo_count;
 
    logic                            prefetch_exec;
