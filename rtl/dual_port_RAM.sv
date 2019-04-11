@@ -34,6 +34,8 @@ module dual_port_RAM
      */
     DATA_WIDTH   = 8,
     RAM_DEPTH    = 256,
+
+    localparam
     LB_RAM_DEPTH = $clog2(RAM_DEPTH))
    (input  logic [DATA_WIDTH-1:0]   din0,
     input  logic [DATA_WIDTH-1:0]   din1,
