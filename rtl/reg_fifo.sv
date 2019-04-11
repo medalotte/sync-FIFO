@@ -34,17 +34,19 @@ module reg_fifo
      */
     DATA_WIDTH    = 8,
     FIFO_DEPTH    = 4,
+
+    localparam
     LB_FIFO_DEPTH = $clog2(FIFO_DEPTH))
    (input  logic [DATA_WIDTH-1:0]  in_data,
-    input  logic                   in_valid,
+    input logic                    in_valid,
     output logic                   in_ready,
     output logic [DATA_WIDTH-1:0]  out_data,
     output logic                   out_valid,
-    input  logic                   out_ready,
-    input  logic                   clear,
+    input logic                    out_ready,
+    input logic                    clear,
     output logic [LB_FIFO_DEPTH:0] count,
-    input  logic                   clk,
-    input  logic                   rstn);
+    input logic                    clk,
+    input logic                    rstn);
 
    logic [FIFO_DEPTH-1:0][DATA_WIDTH-1:0] dist_ram = '{default:0};
    logic [LB_FIFO_DEPTH-1:0]              waddr_r, raddr_r;
@@ -61,31 +63,31 @@ module reg_fifo
    end
 
    always_ff @(posedge clk) begin
-     if(!rstn | clear) begin
-        waddr_r <= 0;
-        raddr_r <= 0;
-        count_r <= 0;
-     end
-     else begin
-        case({in_exec, out_exec})
-          2'b00 : begin
-          end
-          2'b01 : begin
-             raddr_r <= raddr_r + 1;
-             count_r <= count_r - 1;
-          end
-          2'b10 : begin
-             dist_ram[waddr_r] <= in_data;
-             waddr_r           <= waddr_r + 1;
-             count_r           <= count_r + 1;
-          end
-          2'b11 : begin
-             dist_ram[waddr_r] <= in_data;
-             waddr_r           <= waddr_r + 1;
-             raddr_r           <= raddr_r + 1;
-          end
-        endcase
-     end
+      if(!rstn | clear) begin
+         waddr_r <= 0;
+         raddr_r <= 0;
+         count_r <= 0;
+      end
+      else begin
+         case({in_exec, out_exec})
+           2'b00 : begin
+           end
+           2'b01 : begin
+              raddr_r <= raddr_r + 1;
+              count_r <= count_r - 1;
+           end
+           2'b10 : begin
+              dist_ram[waddr_r] <= in_data;
+              waddr_r           <= waddr_r + 1;
+              count_r           <= count_r + 1;
+           end
+           2'b11 : begin
+              dist_ram[waddr_r] <= in_data;
+              waddr_r           <= waddr_r + 1;
+              raddr_r           <= raddr_r + 1;
+           end
+         endcase
+      end
    end
 
 endmodule
