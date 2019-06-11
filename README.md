@@ -1,5 +1,5 @@
 # sync-FIFO
-A synchronous FIFO which consist of Dual Port RAM for FPGA implementation by using SystemVerilog
+Synchronous FIFO which consist of Dual Port RAM for FPGA implementation by using SystemVerilog
 
 ## Feature
 - Interface are designed by VALID-READY handshake
